@@ -1,27 +1,23 @@
 import * as React from 'react';
-
-import { Box, Button, Card, CardContent, Container, IconButton, Typography } from '@mui/joy';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-
-import { Brand } from '~/common/brand';
-import { Link } from '~/common/components/Link';
-import { capitalizeFirstLetter } from '~/common/util/textUtils';
-
-import { NewsItems } from './news.data';
-
+import { Sheet, Typography, Container, Card, CardContent, IconButton } from '@mui/joy';
+//import { Box, Button, Card, CardContent, Container, IconButton, Typography } from '@mui/joy';
+import { useMarkNewsAsSeen } from './news.hooks';
 
 export function AppNews() {
   // state
   const [lastNewsIdx, setLastNewsIdx] = React.useState<number>(0);
+  const [keyword, setKeyword] = React.useState<string>('');
+  const markNewsAsSeen = useMarkNewsAsSeen();
 
   // news selection
-  const news = NewsItems.filter((_, idx) => idx <= lastNewsIdx);
-  const firstNews = news[0] ?? null;
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    markNewsAsSeen(keyword);
+  };
+const greyBlue = "#5a5a72"; 
   return (
-
-    <Box sx={{
-      backgroundColor: 'background.level1',
+    <Sheet variant='soft' invertedColors sx={{
       display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
       flexGrow: 1,
       overflowY: 'auto',
@@ -30,65 +26,33 @@ export function AppNews() {
       gap: 4,
     }}>
 
-      <Typography level='h1' sx={{fontSize: '3.6rem'}}>
-        New updates!
+      <Typography level='h1'>
+        Updates - Novidades!
       </Typography>
 
-      <Typography>
-        {capitalizeFirstLetter(Brand.Title.Base)} has been updated to version {firstNews?.versionName}. Enjoy what&apos;s new:
+      <Typography level='body-sm'>
+        Não é mais necessário usar comandos! Assistentes mais inteligentes!
+        Quando o limite de texto em um chat chegar ao máximo as mensagens mais antigas são apagadas, e você pode continuar conversando!
       </Typography>
 
-      {!!news && <Container disableGutters maxWidth='sm'>
-        {news?.map((ni, idx) => {
-          const firstCard = idx === 0;
-          const hasCardAfter = news.length < NewsItems.length;
-          const showExpander = hasCardAfter && (idx === news.length - 1);
-          const addPadding = !firstCard || showExpander;
-          return <Card key={'news-' + idx} sx={{ mb: 2, minHeight: 32 }}>
-            <CardContent sx={{ position: 'relative', pr: addPadding ? 4 : 0 }}>
-              {!!ni.text && <Typography component='div'>
-                {ni.text}
-              </Typography>}
+      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+        <label style={{ color: greyBlue }}>
+          Entre com a palavra chave* :
+        </label>
+        <input
+          type="text"
+          value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
+          style={{ padding: '10px', marginBottom: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
+        />
+        <button type="submit" style={{ backgroundColor: greyBlue, color: 'white', padding: '10px 20px', borderRadius: '4px', cursor: 'pointer' }}>
+          Enviar
+        </button>
+      </form>
 
-              {!!ni.items && (ni.items.length > 0) && <ul style={{ marginTop: 8, marginBottom: 8, paddingInlineStart: 24 }}>
-                {ni.items.map((item, idx) => <li key={idx}>
-                  <Typography component='div'>
-                    {item.text}
-                  </Typography>
-                </li>)}
-              </ul>}
+      <div>*Visite <b><a href="https://targetteal.com/pt/ia/" target='_blank'>targetteal.com</a></b> para obter a palavra chave</div>
 
-              {/*!firstCard &&*/ (
-                <Typography level='body-sm' sx={{ position: 'absolute', right: 0, top: 0 }}>
-                  {ni.versionName}
-                </Typography>
-              )}
-
-              {showExpander && (
-                <IconButton
-                  variant='plain' size='sm'
-                  onClick={() => setLastNewsIdx(idx + 1)}
-                  sx={{ position: 'absolute', right: 0, bottom: 0, mr: -1, mb: -1 }}
-                >
-                  <ExpandMoreIcon />
-                </IconButton>
-              )}
-
-            </CardContent>
-          </Card>;
-        })}
-      </Container>}
-
-      <Button variant='solid' color='neutral' size='lg' component={Link} href='/' noLinkStyle>
-        Got it!
-      </Button>
-
-      {/*<Typography sx={{ textAlign: 'center' }}>*/}
-      {/*  Enjoy!*/}
-      {/*  <br /><br />*/}
-      {/*  -- The {Brand.Title.Base} Team*/}
-      {/*</Typography>*/}
-
-    </Box>
+      </Sheet>
   );
 }
+

@@ -11,7 +11,7 @@ export default function ChatPage() {
   useShowNewsOnUpdate();
 
   return (
-    <AppLayout>
+    <AppLayout suspendAutoModelsSetup>
       <AppChat />
     </AppLayout>
   );
