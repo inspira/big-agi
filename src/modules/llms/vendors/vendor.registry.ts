@@ -18,7 +18,7 @@ const MODEL_VENDOR_REGISTRY: Record<ModelVendorId, IModelVendor> = {
   openrouter: ModelVendorOpenRouter,
 };
 
-const MODEL_VENDOR_DEFAULT: ModelVendorId = 'openai';
+const MODEL_VENDOR_DEFAULT: ModelVendorId = 'anthropic';
 
 
 export function findAllVendors(): IModelVendor[] {
