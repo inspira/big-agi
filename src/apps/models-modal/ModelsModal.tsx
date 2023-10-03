@@ -14,6 +14,11 @@ import { ModelsList } from './ModelsList';
 import { ModelsSourceSelector } from './ModelsSourceSelector';
 import { VendorSourceSetup } from './VendorSourceSetup';
 
+import { apiQuery } from '~/modules/trpc/trpc.client';
+import { useSourceSetup } from '~/modules/llms/store-llms';
+import { ModelVendorAnthropic, hasServerKeyAnthropic, isValidAnthropicApiKey } from '~/modules/llms/vendors/anthropic/anthropic.vendor';
+// Anthropic uses this from OpenAI in AnthropicSourceSetup.tsx
+import { modelDescriptionToDLLM } from '~/modules/llms/vendors/openai/OpenAISourceSetup';
 
 export function ModelsModal(props: { suspendAutoModelsSetup?: boolean }) {
 
@@ -41,6 +46,37 @@ export function ModelsModal(props: { suspendAutoModelsSetup?: boolean }) {
     if (!selectedSourceId && !props.suspendAutoModelsSetup)
       openModelsSetup();
   }, [selectedSourceId, openModelsSetup, props.suspendAutoModelsSetup]);
+
+
+
+  // setup Anthropic model for cold setup - uses code in AnthropicSourceSetup.tsx
+
+  // external state
+  const {
+    source, sourceLLMs, updateSetup,
+    normSetup: { anthropicKey, anthropicHost },
+  } = useSourceSetup(selectedSourceId, ModelVendorAnthropic.normalizeSetup);
+
+  const hasModels = !!sourceLLMs.length;
+  const needsUserKey = !hasServerKeyAnthropic;
+  const keyValid = isValidAnthropicApiKey(anthropicKey);
+  const shallFetchSucceed = anthropicKey ? keyValid : !needsUserKey;
+
+  // fetch models
+  const { isFetching, refetch, isError, error } = apiQuery.llmAnthropic.listModels.useQuery({
+    access: { anthropicKey, anthropicHost },
+  }, {
+    enabled: !hasModels && shallFetchSucceed,
+    onSuccess: models => {
+      //keep only claude2
+      models.models = models.models.filter((item) => item.id.toLowerCase()=='claude-2.0');
+      source && useModelsStore.getState().addLLMs(models.models.map(model => modelDescriptionToDLLM(model, source)))
+    },
+    staleTime: Infinity,
+  });
+
+
+  
 
   // add the default source on cold - will require setup
   React.useEffect(() => {
