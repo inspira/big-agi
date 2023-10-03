@@ -191,7 +191,7 @@ export function modelDescriptionToDLLM(model: ModelDescriptionSchema, source: DM
     _source: source,
     options: {
       llmRef: model.id,
-      llmTemperature: 0.5,
+      llmTemperature: 0.0,
       llmResponseTokens: Math.round(model.contextWindow / 8),
     },
   };
