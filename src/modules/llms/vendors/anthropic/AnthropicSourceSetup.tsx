@@ -35,7 +35,11 @@ export function AnthropicSourceSetup(props: { sourceId: DModelSourceId }) {
     access: { anthropicKey, anthropicHost },
   }, {
     enabled: !hasModels && shallFetchSucceed,
-    onSuccess: models => source && useModelsStore.getState().addLLMs(models.models.map(model => modelDescriptionToDLLM(model, source))),
+    onSuccess: models => {
+      //keep only claude2
+      models.models = models.models.filter((item) => item.id.toLowerCase()=='claude-2.0');
+      source && useModelsStore.getState().addLLMs(models.models.map(model => modelDescriptionToDLLM(model, source)))
+    },
     staleTime: Infinity,
   });
 
