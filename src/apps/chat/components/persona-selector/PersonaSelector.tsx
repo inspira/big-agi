@@ -103,11 +103,11 @@ export function PersonaSelector(props: { conversationId: string, runExample: (ex
       setSystemPurposeId(props.conversationId, purposeId);
   };
 
-  const handleCustomSystemMessageChange = (v: React.ChangeEvent<HTMLTextAreaElement>): void => {
-    // TODO: persist this change? Right now it's reset every time.
-    //       maybe we shall have a "save" button just save on a state to persist between sessions
-    SystemPurposes['Custom'].systemMessage = v.target.value;
-  };
+  // const handleCustomSystemMessageChange = (v: React.ChangeEvent<HTMLTextAreaElement>): void => {
+  //   // TODO: persist this change? Right now it's reset every time.
+  //   //       maybe we shall have a "save" button just save on a state to persist between sessions
+  //   SystemPurposes['Custom'].systemMessage = v.target.value;
+  // };
 
 
   // we show them all if the filter is clear (null)
@@ -238,7 +238,7 @@ export function PersonaSelector(props: { conversationId: string, runExample: (ex
             )}
         </Typography>
 
-        {systemPurposeId === 'Custom' && (
+        {/* {systemPurposeId === 'Custom' && (
           <Textarea
             variant='outlined' autoFocus placeholder={'Craft your custom system message here…'}
             minRows={3}
@@ -251,7 +251,7 @@ export function PersonaSelector(props: { conversationId: string, runExample: (ex
               lineHeight: 1.75,
               mt: 1,
             }} />
-        )}
+        )} */}
 
       </Box>
 
