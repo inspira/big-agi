@@ -8,12 +8,12 @@ import { clientUtmSource } from '~/common/util/pwaUtils';
 
 
 // update this variable every time you want to broadcast a new version to clients
-export const incrementalVersion: number = 1;
+export const incrementalVersion: number = 5;
 
 // news and feature surfaces
 export const NewsItems: NewsItem[] = [
   {
-    versionName: '1.3.5',
+    versionName: '1.4.1',
     items: [
       { text: <>Visite <b><Link href="https://targetteal.com/pt/ia/" target='_blank'>targetteal.com</Link></b> para obter a palavra chave</> },
     ],

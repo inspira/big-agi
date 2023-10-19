@@ -25,5 +25,6 @@ export const Brand = {
     CardImage: 'https://targetteal.com/wp-content/uploads/card-dark-1200.png',
     OpenRepo: 'https://targetteal.com',
     SupportInvite: 'https://discord.gg/sbKUY9Wv4C',
+    PrivacyPolicy: 'https://big-agi.com/privacy',
   },
 };
