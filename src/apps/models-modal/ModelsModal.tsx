@@ -14,9 +14,9 @@ import { ModelsList } from './ModelsList';
 import { ModelsSourceSelector } from './ModelsSourceSelector';
 import { VendorSourceSetup } from './VendorSourceSetup';
 
-import { apiQuery } from '~/modules/trpc/trpc.client';
+import { apiQuery } from '~/common/util/trpc.client';
 import { useSourceSetup } from '~/modules/llms/store-llms';
-import { ModelVendorAnthropic, hasServerKeyAnthropic, isValidAnthropicApiKey } from '~/modules/llms/vendors/anthropic/anthropic.vendor';
+import { ModelVendorAnthropic, isValidAnthropicApiKey } from '~/modules/llms/vendors/anthropic/anthropic.vendor';
 // Anthropic uses this from OpenAI in AnthropicSourceSetup.tsx
 import { modelDescriptionToDLLM } from '~/modules/llms/vendors/openai/OpenAISourceSetup';
 
@@ -52,21 +52,22 @@ export function ModelsModal(props: { suspendAutoModelsSetup?: boolean }) {
   // setup Anthropic model for cold setup - uses code in AnthropicSourceSetup.tsx
 
   // external state
-  const {
-    source, sourceLLMs, updateSetup,
-    normSetup: { anthropicKey, anthropicHost },
-  } = useSourceSetup(selectedSourceId, ModelVendorAnthropic.normalizeSetup);
+  const { source, sourceHasLLMs, access, updateSetup } =
+  useSourceSetup(selectedSourceId, ModelVendorAnthropic.getAccess);
 
-  const hasModels = !!sourceLLMs.length;
-  const needsUserKey = !hasServerKeyAnthropic;
+  // derived state
+  const { anthropicKey, heliconeKey } = access;
+
+  const needsUserKey = !ModelVendorAnthropic.hasServerKey;
   const keyValid = isValidAnthropicApiKey(anthropicKey);
+  const keyError = (/*needsUserKey ||*/ !!anthropicKey) && !keyValid;
   const shallFetchSucceed = anthropicKey ? keyValid : !needsUserKey;
 
   // fetch models
   const { isFetching, refetch, isError, error } = apiQuery.llmAnthropic.listModels.useQuery({
-    access: { anthropicKey, anthropicHost },
+    access,
   }, {
-    enabled: !hasModels && shallFetchSucceed,
+    enabled: !sourceHasLLMs && shallFetchSucceed,
     onSuccess: models => {
       //keep only claude2
       models.models = models.models.filter((item) => item.id.toLowerCase()=='claude-2.0');
