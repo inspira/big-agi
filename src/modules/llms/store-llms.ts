@@ -162,7 +162,8 @@ export const useModelsStore = create<ModelsData & ModelsActions>()(
 
     }),
     {
-      name: 'app-models',
+      // Rename 'app-models' to 'app-models-2' to force client reset
+      name: 'app-models-2',
 
       // Pre-saving: omit the memory references from the persisted state
       partialize: (state) => ({
