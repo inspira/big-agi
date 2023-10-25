@@ -432,9 +432,9 @@ export function Composer(props: {
 
   // const prodiaApiKey = isValidProdiaApiKey(useSettingsStore(state => state.prodiaApiKey));
   // const isProdiaConfigured = !requireUserKeyProdia || prodiaApiKey;
-  const textPlaceholder: string = props.isDeveloperMode
-    ? 'Chat with me · drop source files · attach code...'
-    : /*isProdiaConfigured ?*/ 'Chat · /react · /imagine · drop text files...' /*: 'Chat · /react · drop text files...'*/;
+const textPlaceholder: string = props.isDeveloperMode
+    ? 'Se tiver dúvidas, diga olá e dê enter.'
+    : 'Escreva ou use o microfone para falar com nossos assistentes.';
 
   // const isImmediate = props.chatModeId === 'immediate';
   const isFollowUp = props.chatModeId === 'immediate-follow-up';
