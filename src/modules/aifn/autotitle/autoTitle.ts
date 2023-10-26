@@ -20,7 +20,7 @@ export async function autoTitle(conversationId: string) {
   // first line of the last 5 messages
   const historyLines: string[] = conversation.messages.filter(m => m.role !== 'system').slice(-5).map(m => {
     let text = m.text.split('\n')[0];
-    text = text.length > 50 ? text.substring(0, 50) + '...' : text;
+    text = text.length > 100 ? text.substring(0, 100) + '...' : text;
     text = `${m.role === 'user' ? 'You' : 'Assistant'}: ${text}`;
     return `- ${text}`;
   });
