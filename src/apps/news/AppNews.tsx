@@ -46,7 +46,7 @@ export function AppNews() {
         </header>
         <Typography level="h1" className={styles.title}>
           <Image src={LogoAI} alt="Target Teal - AI" width="48" height="48" />
-          Assistente IA
+          Assistentes IA
         </Typography>
 
         <form className={styles.form} onSubmit={handleSubmit}>
