@@ -9,47 +9,51 @@ import { bodyFontClassName, createEmotionCache } from '~/common/theme';
 
 import { MyAppProps } from './_app';
 
-
 interface MyDocumentProps extends DocumentProps {
   emotionStyleTags: React.JSX.Element[];
 }
 
 export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
   return (
-    <Html lang='en' className={bodyFontClassName}>
+    <Html lang="en" className={bodyFontClassName}>
       <Head>
         {/* Meta (missing Title, set by the App or Page) */}
-        <meta name='description' content={Brand.Meta.Description} />
-        <meta name='theme-color' content={Brand.Meta.ThemeColor} />
+        <meta name="description" content={Brand.Meta.Description} />
+        <meta name="theme-color" content={Brand.Meta.ThemeColor} />
 
         {/* Favicons & PWA */}
-        <link rel='shortcut icon' href='/favicon.ico' />
-        <link rel='icon' type='image/png' sizes='32x32' href='/icons/favicon-32x32.png' />
-        <link rel='icon' type='image/png' sizes='16x16' href='/icons/favicon-16x16.png' />
-        <link rel='apple-touch-icon' sizes='180x180' href='/icons/apple-touch-icon.png' />
-        <link rel='manifest' href='/manifest.json' />
-        <meta name='apple-mobile-web-app-capable' content='yes' />
-        <meta name='apple-mobile-web-app-status-bar-style' content='black' />
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 
         {/* Opengraph */}
-        <meta property='og:title' content={Brand.Title.Common} />
-        <meta property='og:description' content={Brand.Meta.Description} />
-        {Brand.URIs.CardImage && <meta property='og:image' content={Brand.URIs.CardImage} />}
-        <meta property='og:url' content={Brand.URIs.Home} />
-        <meta property='og:site_name' content={Brand.Meta.SiteName} />
-        <meta property='og:type' content='website' />
+        <meta property="og:title" content={Brand.Title.Common} />
+        <meta property="og:description" content={Brand.Meta.Description} />
+        {Brand.URIs.CardImage && <meta property="og:image" content={Brand.URIs.CardImage} />}
+        <meta property="og:url" content={Brand.URIs.Home} />
+        <meta property="og:site_name" content={Brand.Meta.SiteName} />
+        <meta property="og:type" content="website" />
 
         {/* Twitter */}
-        <meta property='twitter:card' content='summary_large_image' />
-        <meta property='twitter:url' content={Brand.URIs.Home} />
-        <meta property='twitter:title' content={Brand.Title.Common} />
-        <meta property='twitter:description' content={Brand.Meta.Description} />
-        {Brand.URIs.CardImage && <meta property='twitter:image' content={Brand.URIs.CardImage} />}
-        <meta name='twitter:site' content={Brand.Meta.TwitterSite} />
-        <meta name='twitter:card' content='summary_large_image' />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={Brand.URIs.Home} />
+        <meta property="twitter:title" content={Brand.Title.Common} />
+        <meta property="twitter:description" content={Brand.Meta.Description} />
+        {Brand.URIs.CardImage && <meta property="twitter:image" content={Brand.URIs.CardImage} />}
+        <meta name="twitter:site" content={Brand.Meta.TwitterSite} />
+        <meta name="twitter:card" content="summary_large_image" />
+
+        {/* Google Fonts - Anton and Roboto */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@400;500&display=swap" rel="stylesheet"></link>
 
         {/* Style Sheets (injected and server-side) */}
-        <meta name='emotion-insertion-point' content='' />
+        <meta name="emotion-insertion-point" content="" />
         {emotionStyleTags}
       </Head>
       <body>

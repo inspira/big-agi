@@ -38,6 +38,7 @@
     "react-katex": "^3.0.1",
     "react-markdown": "^8.0.7",
     "remark-gfm": "^3.0.1",
+    "sass": "^1.69.5",
     "superjson": "^1.13.1",
     "tesseract.js": "^4.1.1",
     "uuid": "^9.0.0",

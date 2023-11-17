@@ -1,0 +1,153 @@
+$color-black: #000000;
+$color-gray: #d2d2d2;
+$color-green: #16becf;
+$font-anton: 'Anton', sans-serif;
+$font-roboto: 'Roboto', sans-serif;
+
+.container {
+  max-width: 50rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  text-align: center;
+
+  .content {
+    p {
+      font-family: $font-roboto;
+      font-size: 1.125rem;
+      color: $color-black;
+      text-align: center;
+    }
+  }
+
+  .title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 3.438rem;
+    line-height: 5.188rem;
+    letter-spacing: 0.02em;
+    font-weight: normal;
+    font-family: $font-anton;
+    gap: 0.5rem;
+  }
+
+  .form {
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0 auto;
+
+    label {
+      font-family: $font-roboto;
+      font-size: 1.125rem;
+      color: $color-black;
+      margin-bottom: 0.75rem;
+    }
+
+    input {
+      width: 100%;
+      height: 3.438rem;
+      border: 1px solid $color-gray;
+      padding: 0 1rem;
+      border-radius: 0.25rem;
+      font-family: $font-roboto;
+      font-size: 1rem;
+      color: $color-black;
+
+      &:focus-visible {
+        outline: none;
+        border-radius: 0;
+        border-color: $color-green;
+      }
+    }
+
+    button {
+      width: 100%;
+      height: 3.438rem;
+      position: relative;
+      border: none;
+      cursor: pointer;
+      margin-top: 2.5rem;
+
+      span {
+        font-family: $font-roboto;
+        font-size: 1.125rem;
+        color: $color-black;
+        font-weight: 500;
+        text-transform: uppercase;
+        position: relative;
+        z-index: 2;
+      }
+
+      &::before {
+        content: '';
+        width: 100%;
+        height: 3.438rem;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: $color-green;
+        z-index: 1;
+      }
+
+      &:after {
+        content: '';
+        width: 100%;
+        height: 3.438rem;
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        background-color: $color-black;
+        z-index: 0;
+      }
+
+      &:hover {
+        &:after {
+          top: 2px;
+          left: 2px;
+        }
+      }
+    }
+
+    a {
+      width: 100%;
+      text-align: center;
+      margin-top: 1.5rem;
+      color: $color-green;
+      font-size: 1rem;
+      text-decoration: none;
+      font-weight: 600;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    p {
+      font-size: 0.875rem;
+      color: $color-black;
+      text-align: center;
+    }
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .container {
+    padding: 12.5rem 0 0.625rem 0;
+
+    .footer {
+      flex-direction: column;
+      gap: 0;
+    }
+  }
+}

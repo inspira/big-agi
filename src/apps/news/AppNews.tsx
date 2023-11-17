@@ -1,7 +1,13 @@
 import * as React from 'react';
+import Image from 'next/image';
 import { Sheet, Typography, Container, Card, CardContent, IconButton } from '@mui/joy';
 //import { Box, Button, Card, CardContent, Container, IconButton, Typography } from '@mui/joy';
 import { useMarkNewsAsSeen } from './news.hooks';
+
+import LogoAI from '../../assets/images/logo-AI.png';
+import LogoInspira from '../../assets/images/logo-inspira.png';
+
+import styles from './styles.module.scss';
 
 export function AppNews() {
   // state
@@ -15,44 +21,44 @@ export function AppNews() {
     e.preventDefault();
     markNewsAsSeen(keyword);
   };
-const greyBlue = "#5a5a72"; 
+  const white = '#ffffff';
   return (
-    <Sheet variant='soft' invertedColors sx={{
-      display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-      flexGrow: 1,
-      overflowY: 'auto',
-      minHeight: 96,
-      p: { xs: 3, md: 6 },
-      gap: 4,
-    }}>
+    <Sheet
+      variant="soft"
+      invertedColors
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexGrow: 1,
+        overflowY: 'auto',
+        minHeight: 96,
+        p: { xs: 3, md: 6 },
+        gap: 4,
+        backgroundColor: white,
+      }}
+    >
+      <div className={styles.container}>
+        <Typography level="h1" className={styles.title}>
+          <Image src={LogoAI} alt="Target Teal - AI" width="48" height="48" />
+          Assistente IA
+        </Typography>
 
-      <Typography level='h1'>
-        Updates - Novidades!
-      </Typography>
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <label>Digite sua palavra-chave</label>
+          <input type="text" value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+          <button type="submit">
+            <span>Entrar</span>
+          </button>
+          <a href="https://targetteal.com/pt/ia/">Não tem uma palavra-chave?</a>
+        </form>
 
-      <Typography level='body-sm'>
-        Não é mais necessário usar comandos! Assistentes mais inteligentes!
-        Quando o limite de texto em um chat chegar ao máximo as mensagens mais antigas são apagadas, e você pode continuar conversando!
-      </Typography>
-
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-        <label style={{ color: greyBlue }}>
-          Entre com a palavra chave* :
-        </label>
-        <input
-          type="text"
-          value={keyword}
-          onChange={(e) => setKeyword(e.target.value)}
-          style={{ padding: '10px', marginBottom: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
-        />
-        <button type="submit" style={{ backgroundColor: greyBlue, color: 'white', padding: '10px 20px', borderRadius: '4px', cursor: 'pointer' }}>
-          Enviar
-        </button>
-      </form>
-
-      <div>*Visite <b><a href="https://targetteal.com/pt/ia/" target='_blank'>targetteal.com</a></b> para obter a palavra chave</div>
-
-      </Sheet>
+        <div className={styles.footer}>
+          <p>Uma solução desenvolvida com apoio da </p>
+          <a href="https://www.inspira.com.br/#TargetTeal" target='_blank'><Image src={LogoInspira} alt="Inspira" width={80} height={21} /></a>
+        </div>
+      </div>
+    </Sheet>
   );
 }
-
