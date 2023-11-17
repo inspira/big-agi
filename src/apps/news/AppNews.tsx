@@ -4,6 +4,7 @@ import { Sheet, Typography, Container, Card, CardContent, IconButton } from '@mu
 //import { Box, Button, Card, CardContent, Container, IconButton, Typography } from '@mui/joy';
 import { useMarkNewsAsSeen } from './news.hooks';
 
+import LogoTargetTeal from "../../assets/images/logo-target-teal.png";
 import LogoAI from '../../assets/images/logo-AI.png';
 import LogoInspira from '../../assets/images/logo-inspira.png';
 
@@ -40,6 +41,9 @@ export function AppNews() {
       }}
     >
       <div className={styles.container}>
+        <header className={styles.header}>
+          <Image src={LogoTargetTeal} alt="Target Teal" width="230" height="84" /> 
+        </header>
         <Typography level="h1" className={styles.title}>
           <Image src={LogoAI} alt="Target Teal - AI" width="48" height="48" />
           Assistente IA

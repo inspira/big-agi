@@ -4,8 +4,13 @@ $color-green: #16becf;
 $font-anton: 'Anton', sans-serif;
 $font-roboto: 'Roboto', sans-serif;
 
+.header {
+  display: flex;
+  align-items: flex-start;
+}
+
 .container {
-  max-width: 50rem;
+  max-width: 63.75rem;
   width: 100%;
   display: flex;
   flex-direction: column;
