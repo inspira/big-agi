@@ -2,8 +2,8 @@ import * as React from 'react';
 
 import { Alert, Box, Divider, List, ListItem, Typography } from '@mui/joy';
 
+import type { DConversation } from '~/common/state/store-chats';
 import { GoodModal } from '~/common/components/GoodModal';
-import { DConversation } from '~/common/state/store-chats';
 
 type ConversationOutcome = {
   success: true;
@@ -57,7 +57,9 @@ export function ImportOutcomeModal(props: { outcome: ImportedOutcome, onClose: (
         </Alert>
         <List>
           {failures.map((f, idx) =>
-            <ListItem variant='soft' color='warning' key={'fail-' + idx}><b>{f.fileName}</b>: {(f as any).error}</ListItem>,
+            <ListItem variant='soft' color='warning' key={'fail-' + idx} sx={{ display: 'list-item' }}>
+              <b>{f.fileName}</b>: {(f as any).error}
+            </ListItem>,
           )}
         </List>
       </Box>}

@@ -23,12 +23,8 @@ import { setLayoutDrawerAnchor, setLayoutMenuAnchor, useLayoutComponents } from 
 function AppBarTitle() {
   return (
     <Link href='/'>
-      <LogoSquircle sx={{
-        width: 32,
-        height: 32,
-        color: 'white',
-        // filter: 'invert(1)',
-      }} />
+      {/* Aqui substituímos o componente LogoSquircle pelo seu ícone favicon */}
+      <img src="/favicon.ico" alt="Logo" width="32" height="32"/>
       <Typography sx={{
         ml: { xs: 1, md: 2 },
         color: 'white',
@@ -114,7 +110,7 @@ export function AppBar(props: { sx?: SxProps }) {
       }}>
 
       {/* Drawer Anchor */}
-      {!centerItems ? (
+      {!drawerItems ? (
         <IconButton component={Link} href='/' noLinkStyle variant='plain'>
           <ArrowBackIcon />
         </IconButton>

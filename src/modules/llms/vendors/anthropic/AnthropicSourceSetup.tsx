@@ -1,40 +1,43 @@
 import * as React from 'react';
 
-import { Box, Button } from '@mui/joy';
-import SyncIcon from '@mui/icons-material/Sync';
-
-import { apiQuery } from '~/modules/trpc/trpc.client';
+import { Alert, Box } from '@mui/joy';
 
 import { FormInputKey } from '~/common/components/FormInputKey';
 import { InlineError } from '~/common/components/InlineError';
 import { Link } from '~/common/components/Link';
+import { apiQuery } from '~/common/util/trpc.client';
 import { settingsGap } from '~/common/theme';
+import { useToggleableBoolean } from '~/common/util/useToggleableBoolean';
 
 import { DModelSourceId, useModelsStore, useSourceSetup } from '../../store-llms';
-import { modelDescriptionToDLLM } from '../openai/OpenAISourceSetup';
 
-import { hasServerKeyAnthropic, isValidAnthropicApiKey, ModelVendorAnthropic } from './anthropic.vendor';
+import { RefetchButton, SetupTextControl } from '../vendor.components';
+import { isValidAnthropicApiKey, ModelVendorAnthropic } from './anthropic.vendor';
+import { modelDescriptionToDLLM } from '../openai/OpenAISourceSetup';
 
 
 export function AnthropicSourceSetup(props: { sourceId: DModelSourceId }) {
 
-  // external state
-  const {
-    source, sourceLLMs, updateSetup,
-    normSetup: { anthropicKey, anthropicHost },
-  } = useSourceSetup(props.sourceId, ModelVendorAnthropic.normalizeSetup);
+  // state
+  const advanced = useToggleableBoolean();
 
-  const hasModels = !!sourceLLMs.length;
-  const needsUserKey = !hasServerKeyAnthropic;
+  // external state
+  const { source, sourceHasLLMs, access, updateSetup } =
+    useSourceSetup(props.sourceId, ModelVendorAnthropic.getAccess);
+
+  // derived state
+  const { anthropicKey, heliconeKey } = access;
+
+  const needsUserKey = !ModelVendorAnthropic.hasServerKey;
   const keyValid = isValidAnthropicApiKey(anthropicKey);
   const keyError = (/*needsUserKey ||*/ !!anthropicKey) && !keyValid;
   const shallFetchSucceed = anthropicKey ? keyValid : !needsUserKey;
 
   // fetch models
   const { isFetching, refetch, isError, error } = apiQuery.llmAnthropic.listModels.useQuery({
-    access: { anthropicKey, anthropicHost },
+    access,
   }, {
-    enabled: !hasModels && shallFetchSucceed,
+    enabled: !sourceHasLLMs && shallFetchSucceed,
     onSuccess: models => {
       //keep only claude2
       models.models = models.models.filter((item) => item.id.toLowerCase()=='claude-2.0');
@@ -57,17 +60,19 @@ export function AnthropicSourceSetup(props: { sourceId: DModelSourceId }) {
       placeholder='sk-...'
     />
 
-    <Box sx={{ display: 'flex', alignItems: 'end', justifyContent: 'space-between' }}>
-      <Button
-        variant='solid' color={isError ? 'warning' : 'primary'}
-        disabled={!shallFetchSucceed || isFetching}
-        endDecorator={<SyncIcon />}
-        onClick={() => refetch()}
-        sx={{ minWidth: 120, ml: 'auto' }}
-      >
-        Models
-      </Button>
-    </Box>
+    {advanced.on && <SetupTextControl
+      title='Helicone Key'
+      description={<>Generate <Link level='body-sm' href='https://www.helicone.ai/keys' target='_blank'>here</Link></>}
+      placeholder='sk-...'
+      value={heliconeKey || ''}
+      onChange={text => updateSetup({ heliconeKey: text })}
+    />}
+
+    {!!heliconeKey && <Alert variant='soft' color='success'>
+      Advanced: You set the Helicone key, and Anthropic text will be routed through Helicone.
+    </Alert>}
+
+    <RefetchButton refetch={refetch} disabled={!shallFetchSucceed || isFetching} error={isError} advanced={advanced} />
 
     {isError && <InlineError error={error} />}
 
