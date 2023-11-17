@@ -51,7 +51,7 @@ export function AppNews() {
           <button type="submit">
             <span>Entrar</span>
           </button>
-          <a href="https://targetteal.com/pt/ia/">Não tem uma palavra-chave?</a>
+          <a href="https://targetteal.com/pt/ia/" target='_blank'>Não tem uma palavra-chave?</a>
         </form>
 
         <div className={styles.footer}>
