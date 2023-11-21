@@ -45,6 +45,7 @@
     "react-markdown": "^9.0.0",
     "react-timeago": "^7.2.0",
     "remark-gfm": "^4.0.0",
+    "sass": "^1.69.5",
     "superjson": "^2.0.0",
     "tesseract.js": "^5.0.2",
     "uuid": "^9.0.1",
