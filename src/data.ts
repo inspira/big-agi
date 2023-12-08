@@ -1,4 +1,4 @@
-aimport * as React from 'react';
+import * as React from 'react';
 
 export type SystemPurposeId = 'Developer';
 
